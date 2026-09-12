@@ -7,11 +7,7 @@
   <strong>Another Better Mihomo Client</strong>
 </p>
 
-**FlClash は、Mihomo（Clash Meta）カーネルを搭載し、初期の FlClash をベースに再構築されたマルチプラットフォーム対応のネットワークデバッグ・分流クライアントです。**
-
-「Better Experience（より良い体験）」を追求し、オリジナルの洗練された UI を継承しつつ、細部のデザインや実用ロジックを深層最適化。コア機能と設計目標：「フロントエンドはぬるぬる滑らか、バックグラウンドは省電力で無感」。低リソースで長期にわたり安定動作する、より優れた Mihomo クライアントの実現に尽力しています。
-
-FlClash：Better Experience, Out of the box - 優れた体験を、すぐに使える。
+**FlClash は、Mihomo（Clash Meta）カーネルを搭載し、初期の FlClash をベースに再構築されたマルチプラットフォーム対応のネットワークデバッグ・分流クライアントです。
 
 [![Latest Release](https://img.shields.io/github/v/release/assassin321/FlClash?style=for-the-badge&logo=github&color=238636&label=Release)](https://github.com/assassin321/FlClash/releases/latest) [![Core](https://img.shields.io/github/v/release/MetaCubeX/mihomo?style=for-the-badge&logo=go&logoColor=white&color=8A2BE2&label=Mihomo)](https://github.com/MetaCubeX/mihomo/releases/latest)
 ---

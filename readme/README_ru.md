@@ -7,10 +7,7 @@
   <strong>Another Better Mihomo Client</strong>
 </p>
 
-**FlClash — это мультиплатформенный клиент для отладки сети и маршрутизации трафика на базе правил, созданный на ядре Mihomo (Clash Meta) и переработанный из ранней версии FlClash.**
-
-Следуя принципу «Better Experience» (Лучший опыт), FlClash сохраняет отличный UI оригинала, глубоко оптимизируя детали интерфейса и логику функций. Ключевые особенности и цели: плавная работа в активном режиме и незаметное энергосбережение в фоновом — надёжный клиент Mihomo для долгосрочной стабильной работы с минимальным потреблением ресурсов.
-Название FlClash означает: Better Experience, Out of the box — Превосходный опыт из коробки.
+**FlClash — это мультиплатформенный клиент для отладки сети и маршрутизации трафика на базе правил, созданный на ядре Mihomo (Clash Meta) и переработанный из ранней версии FlClash.
 
 [![Latest Release](https://img.shields.io/github/v/release/assassin321/FlClash?style=for-the-badge&logo=github&color=238636&label=Release)](https://github.com/assassin321/FlClash/releases/latest) [![Core](https://img.shields.io/github/v/release/MetaCubeX/mihomo?style=for-the-badge&logo=go&logoColor=white&color=8A2BE2&label=Mihomo)](https://github.com/MetaCubeX/mihomo/releases/latest)
 ---

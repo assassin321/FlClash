@@ -6,12 +6,7 @@
 <p align="center">
   <strong>Another Better Mihomo Client</strong>
 </p>
-
-**FlClash is a cross-platform network debugging and rule-based traffic splitting client powered by the Mihomo (Clash Meta) core.**
-
-Guided by the principle of "Better Experience", FlClash inherits the original sleek UI while deeply refining key details and feature logic. Core features and design goals: silky-smooth animations in the foreground, zero-impact power saving in the background — dedicated to delivering a better experience as a lightweight Mihomo client that runs stably and reliably over the long term with minimal resource consumption.
-
-FlClash stands for: Better Experience, Out of the box.
+**FlClash is a cross-platform network debugging and rule-based traffic splitting client powered by the Mihomo (Clash Meta) core.
 
 [![Latest Release](https://img.shields.io/github/v/release/assassin321/FlClash?style=for-the-badge&logo=github&color=238636&label=Release)](https://github.com/assassin321/FlClash/releases/latest) [![Core](https://img.shields.io/github/v/release/MetaCubeX/mihomo?style=for-the-badge&logo=go&logoColor=white&color=8A2BE2&label=Mihomo)](https://github.com/MetaCubeX/mihomo/releases/latest)
 ---
