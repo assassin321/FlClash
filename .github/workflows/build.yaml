@@ -103,10 +103,11 @@ jobs:
       - name: Setup Keystore (Android)
         if: matrix.platform == 'android'
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/local.properties
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/keystore.p12
+          echo "storeFile=keystore.p12" >> android/local.properties
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/local.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/local.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/local.properties
           
       - name: Setup Java (Android)
         if: matrix.platform == 'android'
@@ -183,7 +184,7 @@ jobs:
           echo "Patching ${FILE}"
           chmod +w "${FILE}"
 
-      - name: Build FlClash (Non-Windows)
+      - name: Build Bettbox (Non-Windows)
         if: matrix.platform != 'windows'
         shell: bash
         env:
@@ -205,17 +206,17 @@ jobs:
         if: matrix.platform == 'windows'
         shell: pwsh
         run: |
-          $coreHash = (Get-FileHash libclash/windows/FlClashCore.exe -Algorithm SHA256).Hash.ToLower()
+          $coreHash = (Get-FileHash libclash/windows/BettboxCore.exe -Algorithm SHA256).Hash.ToLower()
           Write-Host "Core SHA256: $coreHash"
           dart setup.dart windows --arch ${{ matrix.arch }} --out helper --core-hash $coreHash ${{ matrix.compatible == true && '--compatible' || '' }}
 
-      - name: Build FlClash (Windows)
+      - name: Build Bettbox (Windows)
         if: matrix.platform == 'windows'
         shell: pwsh
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          $coreHash = (Get-FileHash libclash/windows/FlClashCore.exe -Algorithm SHA256).Hash.ToLower()
+          $coreHash = (Get-FileHash libclash/windows/BettboxCore.exe -Algorithm SHA256).Hash.ToLower()
           Write-Host "Core SHA256: $coreHash"
           
           $desc = if ('${{ matrix.compatible }}' -eq 'true') { "${{ matrix.arch }}-compatible" } else { "${{ matrix.arch }}" }
@@ -258,39 +259,39 @@ jobs:
           New-Item -ItemType Directory -Force -Path dist | Out-Null
           
           # 打包整个 Release 目录为 zip
-          Compress-Archive -Path "$sourceDir/*" -DestinationPath "dist/FlClash-windows-$desc-portable.zip" -Force
+          Compress-Archive -Path "$sourceDir/*" -DestinationPath "dist/Bettbox-windows-$desc-portable.zip" -Force
           
-          Write-Host "Portable version created: dist/FlClash-windows-$desc-portable.zip"
+          Write-Host "Portable version created: dist/Bettbox-windows-$desc-portable.zip"
           
           # 列出 zip 内容前几个文件确认
           Write-Host "Contents of portable zip:"
-          Get-ChildItem "dist/FlClash-windows-$desc-portable.zip" | Select-Object Name, Length
+          Get-ChildItem "dist/Bettbox-windows-$desc-portable.zip" | Select-Object Name, Length
 
       - name: Verify Core Permissions (Linux)
         if: matrix.platform == 'linux' && matrix.compatible != true
         shell: bash
         run: |
-          echo "=== Verifying FlClashCore setuid in DEB package ==="
-          if ls dist/FlClash-*.deb 1>/dev/null 2>&1; then
-            DEB_PERMS=$(dpkg-deb -c dist/FlClash-*.deb | grep FlClashCore || true)
+          echo "=== Verifying BettboxCore setuid in DEB package ==="
+          if ls dist/Bettbox-*.deb 1>/dev/null 2>&1; then
+            DEB_PERMS=$(dpkg-deb -c dist/Bettbox-*.deb | grep BettboxCore || true)
             echo "$DEB_PERMS"
             if echo "$DEB_PERMS" | grep -q 'rws'; then
-              echo "OK: FlClashCore in DEB has setuid bit"
+              echo "OK: BettboxCore in DEB has setuid bit"
             else
-              echo "WARNING: FlClashCore in DEB is missing setuid bit (will be set by postinst on install)"
-              POSTINST=$(dpkg-deb -e dist/FlClash-*.deb /tmp/flclash-deb-control && cat /tmp/flclash-deb-control/postinst || true)
-              if ! echo "$POSTINST" | grep -q '/usr/share/FlClash/FlClashCore'; then
-                echo "ERROR: postinst script does not set permissions on /usr/share/FlClash/FlClashCore"
+              echo "WARNING: BettboxCore in DEB is missing setuid bit (will be set by postinst on install)"
+              POSTINST=$(dpkg-deb -e dist/Bettbox-*.deb /tmp/flclash-deb-control && cat /tmp/flclash-deb-control/postinst || true)
+              if ! echo "$POSTINST" | grep -q '/usr/share/Bettbox/BettboxCore'; then
+                echo "ERROR: postinst script does not set permissions on /usr/share/Bettbox/BettboxCore"
                 exit 1
               fi
             fi
           fi
-          echo "=== Verifying FlClashCore setuid in RPM package ==="
-          if ls dist/FlClash-*.rpm 1>/dev/null 2>&1; then
-            RPM_PERMS=$(rpm -qplv dist/FlClash-*.rpm | grep FlClashCore || true)
+          echo "=== Verifying BettboxCore setuid in RPM package ==="
+          if ls dist/Bettbox-*.rpm 1>/dev/null 2>&1; then
+            RPM_PERMS=$(rpm -qplv dist/Bettbox-*.rpm | grep BettboxCore || true)
             echo "$RPM_PERMS"
             if ! echo "$RPM_PERMS" | grep -q 'rws'; then
-              echo "ERROR: FlClashCore in RPM is missing setuid bit"
+              echo "ERROR: BettboxCore in RPM is missing setuid bit"
               exit 1
             fi
           fi
@@ -300,7 +301,7 @@ jobs:
         if: matrix.platform == 'windows'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
+          name: Bettbox-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
           path: ./dist/*portable.zip
           archive: false
           overwrite: true
@@ -309,7 +310,7 @@ jobs:
         if: matrix.platform == 'windows'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-setup
+          name: Bettbox-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-setup
           path: ./dist/*setup.exe
           archive: false
           overwrite: true
@@ -319,7 +320,7 @@ jobs:
         if: matrix.platform == 'macos'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-dmg
+          name: Bettbox-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-dmg
           path: ./dist/*.dmg
           archive: false
           overwrite: true
@@ -329,7 +330,7 @@ jobs:
         if: matrix.platform == 'android'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-android-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-apk
+          name: Bettbox-android-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-apk
           path: ./dist/*.apk
           archive: false
           overwrite: true
@@ -339,7 +340,7 @@ jobs:
         if: matrix.platform == 'linux'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-deb
+          name: Bettbox-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-deb
           path: ./dist/*.deb
           archive: false
           overwrite: true
@@ -348,7 +349,7 @@ jobs:
         if: matrix.platform == 'linux' && matrix.arch == 'amd64'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-AppImage
+          name: Bettbox-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-AppImage
           path: ./dist/*.AppImage
           archive: false
           overwrite: true
@@ -357,7 +358,7 @@ jobs:
         if: matrix.platform == 'linux' && matrix.arch == 'amd64'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-rpm
+          name: Bettbox-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-rpm
           path: ./dist/*.rpm
           archive: false
           overwrite: true
@@ -376,7 +377,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           path: ./dist/
-          pattern: FlClash-*
+          pattern: Bettbox-*
           merge-multiple: true
 
       - name: Generate release.md

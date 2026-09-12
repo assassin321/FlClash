@@ -10,7 +10,7 @@ val localProperties = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 
-val mStoreFile = file("keystore.jks")
+val mStoreFile = file("keystore.p12")
 val mStorePassword: String? = localProperties.getProperty("storePassword")
 val mKeyAlias: String? = localProperties.getProperty("keyAlias")
 val mKeyPassword: String? = localProperties.getProperty("keyPassword")
@@ -42,6 +42,7 @@ android {
         if (isRelease) {
             create("release") {
                 storeFile = mStoreFile
+                storeType = "PKCS12"
                 storePassword = mStorePassword
                 keyAlias = mKeyAlias
                 keyPassword = mKeyPassword
