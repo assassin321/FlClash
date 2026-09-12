@@ -1,2 +1,2 @@
 
--keep class com.appshub.flclash.models.**{ *; }
+-keep class com.assassin321.flclash.models.**{ *; }

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.appshub.flclash.core"
+    namespace = "com.assassin321.flclash.core"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
 

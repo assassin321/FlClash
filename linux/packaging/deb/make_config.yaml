@@ -27,7 +27,7 @@ categories:
   - Network
 
 startup_notify: true
-startup_wm_class: com.appshub.flclash
+startup_wm_class: com.assassin321.flclash
 
 postinstall_scripts:
   - |

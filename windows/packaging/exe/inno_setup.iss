@@ -168,8 +168,8 @@ var
   i: Integer;
 begin
   SetArrayLength(RegistryKeys, 2);
-  RegistryKeys[0] := 'Software\com.appshub.flclash';
-  RegistryKeys[1] := 'Software\com.appshub\FlClash';
+  RegistryKeys[0] := 'Software\com.assassin321.flclash';
+  RegistryKeys[1] := 'Software\com.assassin321\FlClash';
   
   for i := 0 to GetArrayLength(RegistryKeys)-1 do
   begin
@@ -186,8 +186,8 @@ begin
   AppDataPath := ExpandConstant('{userappdata}');
   
   SetArrayLength(UserDataPaths, 2);
-  UserDataPaths[0] := AppDataPath + '\com.appshub.flclash';
-  UserDataPaths[1] := AppDataPath + '\com.appshub\FlClash';
+  UserDataPaths[0] := AppDataPath + '\com.assassin321.flclash';
+  UserDataPaths[1] := AppDataPath + '\com.assassin321\FlClash';
   
   for i := 0 to GetArrayLength(UserDataPaths)-1 do
   begin
@@ -197,9 +197,9 @@ begin
     end;
   end;
   
-  if DirExists(AppDataPath + '\com.appshub') then
+  if DirExists(AppDataPath + '\com.assassin321') then
   begin
-    RemoveDir(AppDataPath + '\com.appshub');
+    RemoveDir(AppDataPath + '\com.assassin321');
   end;
 end;
 

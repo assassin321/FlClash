@@ -17,7 +17,7 @@ val mKeyPassword: String? = localProperties.getProperty("keyPassword")
 val isRelease = mStoreFile.exists() && mStorePassword != null && mKeyAlias != null && mKeyPassword != null
 
 android {
-    namespace = "com.appshub.flclash"
+    namespace = "com.assassin321.flclash"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
 
@@ -31,7 +31,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.appshub.flclash"
+        applicationId = "com.assassin321.flclash"
         minSdk = 26
         targetSdk = 36
         versionCode = flutter.versionCode

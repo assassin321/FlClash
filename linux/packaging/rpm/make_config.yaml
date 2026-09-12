@@ -21,7 +21,7 @@ generic_name: FlClash
 group: Applications/Internet
 
 startup_notify: true
-startup_wm_class: com.appshub.flclash
+startup_wm_class: com.assassin321.flclash
 
 install: |
   mkdir -p %{buildroot}%{_bindir}

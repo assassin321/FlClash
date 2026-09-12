@@ -5,7 +5,7 @@ class AppIdentity {
 
   static const productName = 'FlClash';
   static const devSuffix = 'Dev';
-  static const packageId = 'com.appshub.flclash';
+  static const packageId = 'com.assassin321.flclash';
 
   static const compactName = isDev ? '$productName$devSuffix' : productName;
   static const displayName = isDev ? '$productName Dev' : productName;

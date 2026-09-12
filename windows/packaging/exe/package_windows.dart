@@ -82,7 +82,7 @@ void main(List<String> arguments) async {
     'APP_VERSION': appVersion,
     'EXECUTABLE_NAME': makeConfig['executable_name'] ?? 'FlClash.exe',
     'DISPLAY_NAME': makeConfig['display_name'] ?? 'FlClash',
-    'PUBLISHER_NAME': makeConfig['publisher'] ?? 'appshub.cc',
+    'PUBLISHER_NAME': makeConfig['publisher'] ?? 'assassin321',
     'ARCH': arch == 'arm64' ? 'arm64' : 'x64',
     'PUBLISHER_URL': makeConfig['publisher_url'] ?? 'https://github.com/assassin321/FlClash',
     'CREATE_DESKTOP_ICON': true,

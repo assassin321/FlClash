@@ -8,7 +8,7 @@
 PRODUCT_NAME = FlClash
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.appshub.flclash
+PRODUCT_BUNDLE_IDENTIFIER = com.assassin321.flclash
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 Appshub All rights reserved.

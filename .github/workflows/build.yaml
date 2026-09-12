@@ -295,15 +295,55 @@ jobs:
             fi
           fi
 
-      - name: Upload Artifacts (Non-Linux)
-        if: matrix.platform != 'linux'
+      # ===== Windows 分开发布 =====
+      - name: Upload Windows Portable
+        if: matrix.platform == 'windows'
         uses: actions/upload-artifact@v7
         with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}
-          path: ./dist/*
+          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
+          path: ./dist/*portable.zip
           archive: false
           overwrite: true
 
+      - name: Upload Windows Installer
+        if: matrix.platform == 'windows'
+        uses: actions/upload-artifact@v7
+        with:
+          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-setup
+          path: ./dist/*setup.exe
+          archive: false
+          overwrite: true
+
+      # ===== macOS 分开发布 =====
+      - name: Upload macOS DMG
+        if: matrix.platform == 'macos'
+        uses: actions/upload-artifact@v7
+        with:
+          name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-dmg
+          path: ./dist/*.dmg
+          archive: false
+          overwrite: true
+
+      - name: Upload macOS ZIP
+        if: matrix.platform == 'macos'
+        uses: actions/upload-artifact@v7
+        with:
+          name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-zip
+          path: ./dist/*.zip
+          archive: false
+          overwrite: true
+
+      # ===== Android =====
+      - name: Upload Android APK
+        if: matrix.platform == 'android'
+        uses: actions/upload-artifact@v7
+        with:
+          name: FlClash-android-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-apk
+          path: ./dist/*.apk
+          archive: false
+          overwrite: true
+
+      # ===== Linux 保持不变 =====
       - name: Upload DEB Artifact
         if: matrix.platform == 'linux'
         uses: actions/upload-artifact@v7
