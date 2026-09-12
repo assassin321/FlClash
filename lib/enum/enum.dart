@@ -2,10 +2,10 @@
 
 import 'dart:io';
 
-import 'package:bett_box/common/system.dart';
-import 'package:bett_box/common/app_localizations.dart';
-import 'package:bett_box/views/dashboard/widgets/widgets.dart';
-import 'package:bett_box/widgets/widgets.dart';
+import 'package:fl_clash/common/system.dart';
+import 'package:fl_clash/common/app_localizations.dart';
+import 'package:fl_clash/views/dashboard/widgets/widgets.dart';
+import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

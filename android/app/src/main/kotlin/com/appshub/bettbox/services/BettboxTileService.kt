@@ -37,7 +37,7 @@ class FlClashTileService : TileService() {
             if (GlobalState.isSpeedNotificationEnabled && GlobalState.currentProfileName.isNotEmpty()) {
                 label = GlobalState.currentProfileName
             } else {
-                label = getString(R.string.bett_box)
+                label = getString(R.string.fl_clash)
             }
             updateTile()
         }

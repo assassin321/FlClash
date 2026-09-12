@@ -1,7 +1,7 @@
-import 'package:bett_box/common/common.dart';
-import 'package:bett_box/providers/config.dart';
-import 'package:bett_box/widgets/widgets.dart';
-import 'package:bett_box/views/config/general.dart';
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/providers/config.dart';
+import 'package:fl_clash/widgets/widgets.dart';
+import 'package:fl_clash/views/config/general.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

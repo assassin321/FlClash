@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:bett_box/providers/app.dart';
-import 'package:bett_box/widgets/pop_scope.dart';
+import 'package:fl_clash/providers/app.dart';
+import 'package:fl_clash/widgets/pop_scope.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:bett_box/state.dart';
+import 'package:fl_clash/state.dart';
 import 'text.dart';
 
 class CommonDialog extends ConsumerWidget {

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bett_box/common/common.dart';
-import 'package:bett_box/state.dart';
-import 'package:bett_box/utils/platform_check.dart';
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/state.dart';
+import 'package:fl_clash/utils/platform_check.dart';
 import 'package:restart_app/restart_app.dart';
 
 class ExternalControl {

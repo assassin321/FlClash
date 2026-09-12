@@ -1,5 +1,5 @@
-import 'package:bett_box/plugins/app.dart';
-import 'package:bett_box/state.dart';
+import 'package:fl_clash/plugins/app.dart';
+import 'package:fl_clash/state.dart';
 
 import 'system.dart';
 

@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:bett_box/clash/interface.dart';
-import 'package:bett_box/common/common.dart';
-import 'package:bett_box/enum/enum.dart';
-import 'package:bett_box/helper/helper.dart';
-import 'package:bett_box/models/core.dart';
-import 'package:bett_box/state.dart';
-import 'package:bett_box/utils/frame_codec.dart';
-import 'package:bett_box/utils/platform_check.dart';
+import 'package:fl_clash/clash/interface.dart';
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/helper/helper.dart';
+import 'package:fl_clash/models/core.dart';
+import 'package:fl_clash/state.dart';
+import 'package:fl_clash/utils/frame_codec.dart';
+import 'package:fl_clash/utils/platform_check.dart';
 import 'package:path/path.dart' as p;
 
 class ClashService extends ClashHandlerInterface {

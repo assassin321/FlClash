@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:bett_box/common/task.dart';
-import 'package:bett_box/models/models.dart';
+import 'package:fl_clash/common/task.dart';
+import 'package:fl_clash/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 

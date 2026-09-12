@@ -1,4 +1,4 @@
-import 'package:bett_box/l10n/l10n.dart';
+import 'package:fl_clash/l10n/l10n.dart';
 
 AppLocalizations get appLocalizations => AppLocalizations.current;
 

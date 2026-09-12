@@ -1,5 +1,5 @@
-import 'package:bett_box/plugins/app.dart';
-import 'package:bett_box/providers/providers.dart';
+import 'package:fl_clash/plugins/app.dart';
+import 'package:fl_clash/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

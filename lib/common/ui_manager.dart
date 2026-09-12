@@ -3,8 +3,8 @@ import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
 import 'package:flutter/services.dart';
-import 'package:bett_box/common/common.dart';
-import 'package:bett_box/state.dart';
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/state.dart';
 import 'package:path/path.dart';
 
 class UiManager {

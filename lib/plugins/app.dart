@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:bett_box/common/app_localizations.dart';
-import 'package:bett_box/common/system.dart';
-import 'package:bett_box/models/models.dart';
+import 'package:fl_clash/common/app_localizations.dart';
+import 'package:fl_clash/common/system.dart';
+import 'package:fl_clash/models/models.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 

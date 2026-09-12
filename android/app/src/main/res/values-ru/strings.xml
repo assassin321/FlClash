@@ -1,5 +1,5 @@
 <resources>
-    <string name="bett_box">FlClash</string>
+    <string name="fl_clash">FlClash</string>
     <string name="core_connected">Подключено</string>
     <string name="service_running">Сервис запущен</string>
     <string name="core_suspended">Приостановлено</string>

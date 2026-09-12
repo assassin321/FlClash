@@ -4,11 +4,11 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:bett_box/plugins/app.dart';
-import 'package:bett_box/plugins/clipboard_ext.dart';
-import 'package:bett_box/plugins/tile.dart';
-import 'package:bett_box/plugins/vpn.dart';
-import 'package:bett_box/state.dart';
+import 'package:fl_clash/plugins/app.dart';
+import 'package:fl_clash/plugins/clipboard_ext.dart';
+import 'package:fl_clash/plugins/tile.dart';
+import 'package:fl_clash/plugins/vpn.dart';
+import 'package:fl_clash/state.dart';
 import 'package:code_forge/code_forge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';

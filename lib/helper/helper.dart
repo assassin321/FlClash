@@ -5,10 +5,10 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bett_box/common/helper_auth.dart';
-import 'package:bett_box/common/identity.dart';
-import 'package:bett_box/common/print.dart';
-import 'package:bett_box/common/win32_kernel.dart';
+import 'package:fl_clash/common/helper_auth.dart';
+import 'package:fl_clash/common/identity.dart';
+import 'package:fl_clash/common/print.dart';
+import 'package:fl_clash/common/win32_kernel.dart';
 import 'package:ffi/ffi.dart';
 
 const helperProtocolVersion = 1;

@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bett_box/clash/clash.dart';
-import 'package:bett_box/common/common.dart';
-import 'package:bett_box/state.dart';
-import 'package:bett_box/views/connection/connections.dart';
-import 'package:bett_box/widgets/widgets.dart';
+import 'package:fl_clash/clash/clash.dart';
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/state.dart';
+import 'package:fl_clash/views/connection/connections.dart';
+import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionsCount extends StatefulWidget {

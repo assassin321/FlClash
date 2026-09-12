@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bett_box/models/config.dart';
+import 'package:fl_clash/models/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
