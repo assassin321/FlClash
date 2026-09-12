@@ -314,22 +314,13 @@ jobs:
           archive: false
           overwrite: true
 
-      # ===== macOS 分开发布 =====
+      # ===== macOS =====
       - name: Upload macOS DMG
         if: matrix.platform == 'macos'
         uses: actions/upload-artifact@v7
         with:
           name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-dmg
           path: ./dist/*.dmg
-          archive: false
-          overwrite: true
-
-      - name: Upload macOS ZIP
-        if: matrix.platform == 'macos'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-zip
-          path: ./dist/*.zip
           archive: false
           overwrite: true
 

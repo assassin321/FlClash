@@ -49,7 +49,7 @@ import kotlin.concurrent.withLock
 
 data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     @Volatile
-    private var FlClashService: BaseServiceInterface? = null
+    private var flClashService: BaseServiceInterface? = null
     @Volatile
     private var options: VpnOptions? = null
 
@@ -87,7 +87,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             bindTimeoutJob = null
             isBind = true
             isBinding.set(false)
-            FlClashService = when (service) {
+            flClashService = when (service) {
                 is FlClashVpnService.LocalBinder -> service.getService()
                 is FlClashService.LocalBinder -> service.getService()
                 else -> throw Exception("invalid binder")
@@ -98,7 +98,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         override fun onServiceDisconnected(arg: ComponentName) {
             isBind = false
             isBinding.set(false)
-            FlClashService = null
+            flClashService = null
             if (GlobalState.currentRunState == RunState.START) {
                 android.util.Log.w("VpnPlugin", "Service unexpectedly disconnected while running, syncing state")
                 GlobalState.updateRunState(RunState.STOP)
@@ -143,7 +143,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             }
         }
 
-        if (GlobalState.currentRunState == RunState.START && FlClashService == null) {
+        if (GlobalState.currentRunState == RunState.START && flClashService == null) {
             android.util.Log.d("VpnPlugin", "VPN is running but service connection lost, rebinding...")
             options?.let { bindService() }
         }
@@ -289,7 +289,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     fun handleStart(options: VpnOptions): Boolean {
         onUpdateNetwork()
         if (options.enable != this.options?.enable) {
-            this.FlClashService = null
+            this.flClashService = null
         }
         this.options = options
         when (options.enable) {
@@ -455,7 +455,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         if (!shouldUpdate) return
 
         try {
-            FlClashService?.startForeground()
+            flClashService?.startForeground()
         } catch (e: Exception) {
             android.util.Log.e("VpnPlugin", "startForeground error: ${e.message}")
         }
@@ -467,9 +467,9 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 val context = FlClashApplication.getAppContext()
                 val notificationManager = context.getSystemService(android.app.NotificationManager::class.java)
                 notificationManager?.cancel(GlobalState.NOTIFICATION_ID)
-                (FlClashService as? FlClashService)?.resetNotificationBuilder()
-                (FlClashService as? FlClashVpnService)?.resetNotificationBuilder()
-                FlClashService?.startForeground()
+                (flClashService as? FlClashService)?.resetNotificationBuilder()
+                (flClashService as? FlClashVpnService)?.resetNotificationBuilder()
+                flClashService?.startForeground()
             }.onFailure {
                 android.util.Log.e("VpnPlugin", "updateNotificationIcon error: ${it.message}")
             }
@@ -489,7 +489,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     fun updateNotificationSpeed(profileName: String, speedInfo: String) {
         scope.launch {
             runCatching {
-                (FlClashService as? FlClashVpnService)?.updateNotificationSpeed(profileName, speedInfo)
+                (flClashService as? FlClashVpnService)?.updateNotificationSpeed(profileName, speedInfo)
             }.onFailure {
                 android.util.Log.e("VpnPlugin", "updateNotificationSpeed error: ${it.message}")
             }
@@ -498,8 +498,8 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     fun setHighPriorityNotification(enabled: Boolean) {
         GlobalState.isNotificationHighPriority = enabled
-        (FlClashService as? FlClashService)?.resetNotificationBuilder()
-        (FlClashService as? FlClashVpnService)?.resetNotificationBuilder()
+        (flClashService as? FlClashService)?.resetNotificationBuilder()
+        (flClashService as? FlClashVpnService)?.resetNotificationBuilder()
         if (GlobalState.currentRunState == RunState.START) {
             scope.launch {
                 startForeground()
@@ -509,7 +509,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     fun getStatus(): Boolean {
         return GlobalState.runLock.withLock {
-            GlobalState.currentRunState == RunState.START && FlClashService != null
+            GlobalState.currentRunState == RunState.START && flClashService != null
         }
     }
 
@@ -518,7 +518,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             android.util.Log.w("VpnPlugin", "VPN is in stopping state, ignore start request")
             return
         }
-        if (FlClashService == null) {
+        if (flClashService == null) {
             bindService()
             return
         }
@@ -578,7 +578,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     ) {
         var fd: Int? = 0
         try {
-            fd = FlClashService?.start(currentOptions)
+            fd = flClashService?.start(currentOptions)
         } catch (e: Exception) {
             android.util.Log.e("VpnPlugin", "First start attempt failed: ${e.message}")
         }
@@ -588,7 +588,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 android.util.Log.w("VpnPlugin", "VPN establish failed, retrying...")
                 delay(300)
                 try {
-                    fd = FlClashService?.start(currentOptions)
+                    fd = flClashService?.start(currentOptions)
                 } catch (e: Exception) {
                     android.util.Log.e("VpnPlugin", "Retry start failed: ${e.message}")
                 }
@@ -606,7 +606,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
         val canStart = GlobalState.runLock.withLock {
             if (GlobalState.currentRunState != RunState.START) {
-                FlClashService?.stop()
+                flClashService?.stop()
                 false
             } else true
         }
@@ -637,7 +637,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         var retries = 0
         while (retries < 5) {
             val success = runCatching {
-                (FlClashService as? FlClashVpnService)?.protect(fd) == true
+                (flClashService as? FlClashVpnService)?.protect(fd) == true
             }.getOrDefault(false)
             
             if (success) return true
@@ -683,9 +683,9 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             GlobalState.updateIsStopping(true)
             GlobalState.updateRunState(RunState.STOP)
             ServicePlugin.notifyRunStateChanged(RunState.STOP)
-            serviceRef = FlClashService
+            serviceRef = flClashService
             wasBound = isBind
-            shouldForceStop = force || FlClashService == null
+            shouldForceStop = force || flClashService == null
         }
 
         suspendModule?.uninstall()
@@ -698,7 +698,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 FlClashApplication.getAppContext().unbindService(connection)
                 isBind = false
             }
-            FlClashService = null
+            flClashService = null
         }.onFailure {
             android.util.Log.e("VpnPlugin", "unbindService error: ${it.message}")
         }
@@ -736,8 +736,8 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         suspendModule = null
         Core.stopTun()
         Core.suspended(true)
-        (FlClashService as? FlClashService)?.resetNotificationBuilder()
-        (FlClashService as? FlClashVpnService)?.resetNotificationBuilder()
+        (flClashService as? FlClashService)?.resetNotificationBuilder()
+        (flClashService as? FlClashVpnService)?.resetNotificationBuilder()
         scope.launch {
             startForeground()
         }
@@ -754,7 +754,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 GlobalState.isSmartStopped = false
                 this@VpnPlugin.options = options
 
-                if (FlClashService == null) {
+                if (flClashService == null) {
                     bindService()
                     return@withLock false
                 }
@@ -766,8 +766,8 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             if (!startAllowed) return@launch
 
             Core.suspended(false)
-            (FlClashService as? FlClashService)?.resetNotificationBuilder()
-            (FlClashService as? FlClashVpnService)?.resetNotificationBuilder()
+            (flClashService as? FlClashService)?.resetNotificationBuilder()
+            (flClashService as? FlClashVpnService)?.resetNotificationBuilder()
             performStartCore(options, retry = false, notifyOnFailure = false)
             withContext(Dispatchers.Main) {
                 Toast.makeText(FlClashApplication.getAppContext(), "FlClash Connected", Toast.LENGTH_SHORT).show()
