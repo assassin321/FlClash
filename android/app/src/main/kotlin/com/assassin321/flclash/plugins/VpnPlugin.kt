@@ -705,8 +705,8 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
         val context = FlClashApplication.getAppContext()
         if (shouldForceStop) {
-            context.stopService(Intent(context, FlClashVpnService::class.java))
-            context.stopService(Intent(context, FlClashService::class.java))
+            context.stopService(Intent(context, com.assassin321.flclash.services.FlClashVpnService::class.java))
+            context.stopService(Intent(context, com.assassin321.flclash.services.FlClashService::class.java))
         }
 
         runCatching {
@@ -800,7 +800,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             }
             val intent = Intent(
                 FlClashApplication.getAppContext(),
-                if (options?.enable == true) FlClashVpnService::class.java else FlClashService::class.java
+                if (options?.enable == true) com.assassin321.flclash.services.FlClashVpnService::class.java else com.assassin321.flclash.services.FlClashService::class.java
             )
             val res = FlClashApplication.getAppContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
             if (!res) {
