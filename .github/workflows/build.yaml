@@ -251,9 +251,7 @@ jobs:
           $sourceDir = "build/windows/$archDir/runner/Release"
           $desc = if ('${{ matrix.compatible }}' -eq 'true') { "${{ matrix.arch }}-compatible" } else { "${{ matrix.arch }}" }
 
-          New-Item -ItemType Directory -Force -Path portable-out | Out-Null
-
-          Compress-Archive -Path "$sourceDir/*" -DestinationPath "portable-out/FlClash-windows-$desc-portable.zip" -Force
+          Compress-Archive -Path "$sourceDir/*" -DestinationPath "dist/FlClash-windows-$desc-portable.zip" -Force
 
       - name: Verify Core Permissions (Linux)
         if: matrix.platform == 'linux' && matrix.compatible != true
@@ -290,7 +288,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
-          path: portable-out/*
+          path: dist/*portable.zip
           archive: false
           overwrite: true
 
@@ -386,6 +384,13 @@ jobs:
         if: ${{ env.SHOULD_RELEASE == 'true' }}
         uses: softprops/action-gh-release@v3.0.0
         with:
-          files: ./dist/*
+          files: |
+            dist/*.apk
+            dist/*.deb
+            dist/*.rpm
+            dist/*.AppImage
+            dist/*.dmg
+            dist/*.exe
+            dist/*.zip
           body_path: './release.md'
           prerelease: ${{ env.IS_PRERELEASE == 'true' }}
