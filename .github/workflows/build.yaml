@@ -282,72 +282,19 @@ jobs:
             fi
           fi
 
-      # ===== Windows 分开发布 =====
-      - name: Upload Windows Portable
-        if: matrix.platform == 'windows'
-        uses: actions/upload-artifact@v7
+      - name: Upload
+        uses: actions/upload-artifact@v4
         with:
-          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
-          path: dist/*portable.zip
-          archive: false
-          overwrite: true
-
-      - name: Upload Windows Installer
-        if: matrix.platform == 'windows'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-windows-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-setup
-          path: ./dist/*setup.exe
-          archive: false
-          overwrite: true
-
-      # ===== macOS =====
-      - name: Upload macOS DMG
-        if: matrix.platform == 'macos'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-macos-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-dmg
-          path: ./dist/*.dmg
-          archive: false
-          overwrite: true
-
-      # ===== Android =====
-      - name: Upload Android APK
-        if: matrix.platform == 'android'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-android-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-apk
-          path: ./dist/*.apk
-          archive: false
-          overwrite: true
-
-      # ===== Linux 保持不变 =====
-      - name: Upload DEB Artifact
-        if: matrix.platform == 'linux'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-deb
-          path: ./dist/*.deb
-          archive: false
-          overwrite: true
-
-      - name: Upload AppImage Artifact
-        if: matrix.platform == 'linux' && matrix.arch == 'amd64'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-AppImage
-          path: ./dist/*.AppImage
-          archive: false
-          overwrite: true
-
-      - name: Upload RPM Artifact
-        if: matrix.platform == 'linux' && matrix.arch == 'amd64'
-        uses: actions/upload-artifact@v7
-        with:
-          name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-rpm
-          path: ./dist/*.rpm
-          archive: false
-          overwrite: true
+          name: FlClash-${{ matrix.platform }}${{ matrix.arch && format('-{0}', matrix.arch) }}
+          path: |
+            dist/FlClash-*.apk
+            dist/FlClash-*.deb
+            dist/FlClash-*.rpm
+            dist/FlClash-*.AppImage
+            dist/FlClash-*.dmg
+            dist/FlClash-*.exe
+            dist/FlClash-*.zip
+          if-no-files-found: warn
 
   upload:
     permissions: write-all
@@ -364,27 +311,7 @@ jobs:
         with:
           path: ./dist/
           pattern: FlClash-*
-          merge-multiple: false
-          
-      - name: Debug - list downloaded files
-        run: |
-          echo "=== dist/ structure ==="
-          find ./dist -type f
-          
-      - name: Collect release files
-        run: |
-          mkdir -p release-dist
-          find ./dist -type f -name 'Bettbox-*' \( \
-            -name '*.apk' -o \
-            -name '*.deb' -o \
-            -name '*.rpm' -o \
-            -name '*.AppImage' -o \
-            -name '*.dmg' -o \
-            -name '*.exe' -o \
-            -name '*.zip' \
-          \) -exec cp {} release-dist/ \;
-          echo "=== release-dist ==="
-          ls -la release-dist/
+          merge-multiple: true
 
       - name: Generate release.md
         run: |
@@ -404,6 +331,13 @@ jobs:
         if: ${{ env.SHOULD_RELEASE == 'true' }}
         uses: softprops/action-gh-release@v3.0.0
         with:
-          files: release-dist/*
+          files: |
+            dist/FlClash-*.apk
+            dist/FlClash-*.deb
+            dist/FlClash-*.rpm
+            dist/FlClash-*.AppImage
+            dist/FlClash-*.dmg
+            dist/FlClash-*.exe
+            dist/FlClash-*.zip
           body_path: './release.md'
           prerelease: ${{ env.IS_PRERELEASE == 'true' }}
