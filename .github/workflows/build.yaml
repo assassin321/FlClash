@@ -364,7 +364,27 @@ jobs:
         with:
           path: ./dist/
           pattern: FlClash-*
-          merge-multiple: true
+          merge-multiple: false
+          
+      - name: Debug - list downloaded files
+        run: |
+          echo "=== dist/ structure ==="
+          find ./dist -type f
+          
+      - name: Collect release files
+        run: |
+          mkdir -p release-dist
+          find ./dist -type f -name 'Bettbox-*' \( \
+            -name '*.apk' -o \
+            -name '*.deb' -o \
+            -name '*.rpm' -o \
+            -name '*.AppImage' -o \
+            -name '*.dmg' -o \
+            -name '*.exe' -o \
+            -name '*.zip' \
+          \) -exec cp {} release-dist/ \;
+          echo "=== release-dist ==="
+          ls -la release-dist/
 
       - name: Generate release.md
         run: |
@@ -384,13 +404,6 @@ jobs:
         if: ${{ env.SHOULD_RELEASE == 'true' }}
         uses: softprops/action-gh-release@v3.0.0
         with:
-          files: |
-            dist/*.apk
-            dist/*.deb
-            dist/*.rpm
-            dist/*.AppImage
-            dist/*.dmg
-            dist/*.exe
-            dist/*.zip
+          files: release-dist/*
           body_path: './release.md'
           prerelease: ${{ env.IS_PRERELEASE == 'true' }}
