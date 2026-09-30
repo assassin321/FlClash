@@ -22,7 +22,7 @@ void main(List<String> arguments) async {
   final compatible = args['compatible'] as bool;
   final isDev = args['dev'] as bool;
   final makePortable =
-      (args['portable'] as bool?) ?? (compatible && arch == 'amd64');
+    (args['portable'] as bool?) ?? true;
   final makeInstaller = args['installer'] as bool;
 
   final desc = compatible ? '$arch-compatible' : arch;

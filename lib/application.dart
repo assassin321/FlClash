@@ -71,12 +71,10 @@ class ApplicationState extends ConsumerState<Application>
       globalState.appController = AppController(currentContext, ref);
     }
     await globalState.appController.init();
-    if (!appPath.isPortable) {
-      try {
-        await ExternalControl.start();
-      } catch (e) {
-        commonPrint.log('ExternalControl start failed: $e');
-      }
+    try {
+      await ExternalControl.start();
+    } catch (e) {
+      commonPrint.log('ExternalControl start failed: $e');
     }
     globalState.appController.initLink();
     if (system.isAndroid) {

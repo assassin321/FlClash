@@ -1153,7 +1153,13 @@ class AppController {
             : tagName;
         var finalSuffix = assetSuffix;
         if (appPath.isPortable && system.isWindows) {
-          finalSuffix = 'windows-amd64-compatible-portable.zip';
+          // 从 assetSuffix 解析架构和 compatible 信息
+          // assetSuffix 格式: "windows-amd64-compatible-setup.exe" 或 "windows-arm64-setup.exe"
+          final parts = assetSuffix.split('-');
+          final arch = parts[1];
+          final hasCompat = parts.length >= 3 && parts[2] == 'compatible';
+          final compat = hasCompat ? '-compatible' : '';
+          finalSuffix = 'windows-$arch$compat-portable.zip';
         }
         downloadUrl =
             'https://github.com/$repository/releases/download/$tagName/FlClash-$versionWithoutV-$finalSuffix';

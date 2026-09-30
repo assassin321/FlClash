@@ -295,7 +295,7 @@ jobs:
           overwrite: true
 
       - name: Upload Windows Portable Artifact
-        if: matrix.platform == 'windows' && matrix.compatible == true && matrix.arch == 'amd64'
+        if: matrix.platform == 'windows'
         uses: actions/upload-artifact@v7
         with:
           name: FlClash-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.compatible == true && '-compatible' || '' }}-portable
